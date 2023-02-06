@@ -2,3 +2,5 @@ audio_file/
 output/
 creds/
 audio_message_list.xlsx
+__pycache__/VideoGenerator.cpython-39.pyc
+__pycache__/YouTubeVideoUploader.cpython-39.pyc

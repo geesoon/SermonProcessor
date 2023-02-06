@@ -25,7 +25,7 @@ class VideoGenerator:
         # Create a video file with the same length as the mp3 file and a blank image
         video = ImageClip(self.output_dir + file_name + ".jpg").set_duration(
             audio.duration)
-        video.fps = 30
+        video.fps = 1 # Set to 1 frame per second because the video is a static background with audio, smaller fps improve rendering duration
         video_with_audio = video.set_audio(audio)
         # video_with_audio.preview()
         # Write the final video to a file
@@ -43,26 +43,27 @@ class VideoGenerator:
 
     def generate_video_static_background_image(self, recording):
         # Create an image with a white background
-        image = Image.new("RGB", (1500, 844), (255, 255, 255))
+        image = Image.new("RGB", (1920, 1080), (0, 0, 0))
 
         # Create a draw object to draw on the image
         draw = ImageDraw.Draw(image)
 
         # Select a font and specify its size
         font = ImageFont.truetype(
-            "./Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 36)
+            "./Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 48)
+        title_font = ImageFont.truetype(
+            "./Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 60)
+
+        font_color = (255, 255, 255)
 
         # Draw the text on the image
-        draw.text((250, 200),
+        draw.text((250, 300),
                   "Kajang Gospel Centre",
-                  fill=(0, 0, 0),
-                  font=font)
-        draw.text((250, 350), recording["Topic"], fill=(0, 0, 0), font=font)
-        draw.text((250, 400),
-                  recording["Sub_Topic"],
-                  fill=(0, 0, 0),
-                  font=font)
-        draw.text((250, 450), recording["Passage"], fill=(0, 0, 0), font=font)
+                  fill=font_color,
+                  font=title_font)
+        draw.text((250, 450), recording["Topic"], fill=font_color, font=font)
+        draw.text((250, 530), recording["Sub_Topic"], fill=font_color, font=font)
+        draw.text((250, 610), recording["Passage"], fill=font_color, font=font)
 
         # Save the image
         image.save(self.output_dir + self.get_file_name(recording) + ".jpg")

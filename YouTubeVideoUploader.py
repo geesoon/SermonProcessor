@@ -82,10 +82,10 @@ class YouTubeVideoUploader:
         argparser.add_argument("--file", help="Video file to upload")
         argparser.add_argument("--title",
                                help="Video title",
-                               default="Test Title")
+                               default="")
         argparser.add_argument("--description",
                                help="Video description",
-                               default="Test Description")
+                               default="")
         argparser.add_argument(
             "--category",
             default="22",
@@ -205,7 +205,7 @@ class YouTubeVideoUploader:
 
         dt_start = datetime.now()
         print('Start uploading video to YouTube: ', options.title)
-        self.resumable_upload(insert_request)
+        # self.resumable_upload(insert_request)
         print('Finish uploading video to YouTube: ', options.title)
         dt_end = datetime.now()
         return dt_start, dt_end

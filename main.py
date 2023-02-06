@@ -159,29 +159,35 @@ def main():
 
                 # Upload one video at a time
                 try:
-                    url, upload_start, upload_end = youtube_uploader.upload_video(video_spec)
-                     # Upload audio_message_list excel file in Google Drive
-                    df = update_audio_message_list_excel_file(row, df, dict(
-                        upload_start = upload_start,
-                        upload_end = upload_end,
-                        url = url,
-                        generate_video_start = None,
-                        generate_video_end = None
-                    ))
+                    print(video_spec)
+                    # url, upload_start, upload_end = youtube_uploader.upload_video(video_spec)
+                    #  # Upload audio_message_list excel file in Google Drive
+                    # df = update_audio_message_list_excel_file(row, df, dict(
+                    #     upload_start = upload_start,
+                    #     upload_end = upload_end,
+                    #     url = url,
+                    #     generate_video_start = None,
+                    #     generate_video_end = None
+                    # ))
                 except Exception as error:
                     print(f'''
                     Failed to upload video to YouTube, refer to error below:
                     {error}''')
 
                 # Removed unnamed column and save to excel file
-                df = df.loc[:,~df.columns.str.match("Unnamed")]
-                df.to_excel('./' + AUDIO_MESSAGE_LIST_FILE_NAME + '.xlsx', index=False)
+                df = df.loc[:, ~df.columns.str.match("Unnamed")]
+                df.to_excel('./' + AUDIO_MESSAGE_LIST_FILE_NAME + '.xlsx',
+                            index=False)
                 try:
-                    google_drive_service.replace_file(parent_folder_name = AUDIO_FOLDER_NAME
-                                                    , existing_file_id = audio_message_excel_file["id"]
-                                                    , file_name = audio_message_excel_file["name"]
-                                                    , file_path = './' + AUDIO_MESSAGE_LIST_FILE_NAME + '.xlsx'
-                                                    , file_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+                    google_drive_service.replace_file(
+                        parent_folder_name=AUDIO_FOLDER_NAME,
+                        existing_file_id=audio_message_excel_file["id"],
+                        file_name=audio_message_excel_file["name"],
+                        file_path='./' + AUDIO_MESSAGE_LIST_FILE_NAME +
+                        '.xlsx',
+                        file_type=
+                        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
+                    )
                     display(df)
                 except Exception as error:
                     print(f'''
