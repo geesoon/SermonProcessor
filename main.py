@@ -84,7 +84,6 @@ def print_df(title, df):
     display(df)
     print('\n')
 
-
 def print_process(section, title):
     print('\n' + PRINT_LINE_SEP)
     print(f'Part {section}: {title}')
