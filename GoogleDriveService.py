@@ -52,7 +52,7 @@ class GoogleDriveService:
 
     def get_shared_with_me_folder_id(self, folder_name):
         folder_result = self.service.files().list(
-            q=f"name contains '{folder_name}' and mimeType = 'application/vnd.google-apps.folder'"
+            q=f"name = '{folder_name}' and mimeType = 'application/vnd.google-apps.folder'"
         ).execute()
         folder = folder_result.get('files', [])
         folder_id = folder[0].get('id')

@@ -29,14 +29,14 @@ class VideoGenerator:
         video_with_audio = video.set_audio(audio)
         # video_with_audio.preview()
         # Write the final video to a file
-        video_with_audio.write_videofile(self.output_dir + file_name + ".mp4",
-                                         threads=4,
-                                         audio=True,
-                                         remove_temp=True,
-                                         codec="mpeg4",
-                                         audio_codec='libmp3lame',
-                                         temp_audiofile = self.output_dir + 'TEMP.mp3',
-                                         write_logfile=True)
+        # video_with_audio.write_videofile(self.output_dir + file_name + ".mp4",
+        #                                  threads=4,
+        #                                  audio=True,
+        #                                  remove_temp=True,
+        #                                  codec="mpeg4",
+        #                                  audio_codec='libmp3lame',
+        #                                  temp_audiofile = self.output_dir + 'TEMP.mp3',
+        #                                  write_logfile=True)
 
         dt_end = datetime.now()
         return self.build_video_spec(recording), dt_start, dt_end
