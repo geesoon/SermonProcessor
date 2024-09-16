@@ -1,7 +1,7 @@
 from urllib.error import HTTPError
-from GoogleDriveService import GoogleDriveService
-from VideoGenerator import VideoGenerator
-from YouTubeVideoUploader import YouTubeVideoUploader
+from clients.google_drive_client import GoogleDriveClient
+from video_generator import VideoGenerator
+from clients.youtube_client import YouTubeVideoUploader
 
 from IPython.display import display
 import pandas as pd
@@ -103,7 +103,7 @@ def print_process(section, title):
 
 
 def main():
-    google_drive_service = GoogleDriveService()
+    google_drive_service = GoogleDriveClient()
 
     try:
         # Get audio files list from folder for comparison

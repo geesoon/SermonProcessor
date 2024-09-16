@@ -1,8 +1,8 @@
-from VideoGeneratorV2 import VideoGeneratorV2
+from video_generator_v2 import VideoGeneratorV2
 
 # CONSTANT
-INPUT_DIR = './family_camp_2023/'
-OUTPUT_DIR = './family_camp_2023_output/'
+INPUT_DIR = "./family_camp_2023/"
+OUTPUT_DIR = "./family_camp_2023_output/"
 
 # Find all the audio files in RAW_DIR
 # Get metadata from each audio file
@@ -11,8 +11,10 @@ OUTPUT_DIR = './family_camp_2023_output/'
 # Generate video with black background and message information from metadata
 # Output video to OUTPUT_DIR
 
+
 def main():
     VideoGeneratorV2(INPUT_DIR, OUTPUT_DIR)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

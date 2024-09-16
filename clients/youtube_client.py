@@ -1,22 +1,26 @@
+"""A YouTube Client"""
+
 import http.client
-import httplib2
 import os
 import random
 import sys
 import time
+from datetime import datetime
 
+import httplib2
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
 from googleapiclient.http import MediaFileUpload
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
-from datetime import datetime
 
 
-# YouTube API Quota
-# https://developers.google.com/youtube/v3/determine_quota_cost
-class YouTubeVideoUploader:
+class YouTubeClient:
+    """
+    # YouTube API Quota
+    # https://developers.google.com/youtube/v3/determine_quota_cost"""
+
     id = ""
 
     # Explicitly tell the underlying HTTP transport library not to retry, since
@@ -83,6 +87,14 @@ class YouTubeVideoUploader:
     VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
     def upload_video(self, option):
+        """_summary_
+
+        Args:
+            option (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         argparser.add_argument("--file", help="Video file to upload")
         argparser.add_argument("--title", help="Video title", default="")
         argparser.add_argument("--description", help="Video description", default="")
@@ -119,9 +131,13 @@ class YouTubeVideoUploader:
         except HttpError as e:
             print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
-    # This method implements an exponential backoff strategy to resume a
-    # failed upload.
     def resumable_upload(self, insert_request):
+        """
+        Summary:
+            This method implements an exponential backoff strategy to resume a failed upload.
+        Args:
+            insert_request (_type_): _description_
+        """
         response = None
         error = None
         retry = 0
@@ -163,6 +179,14 @@ class YouTubeVideoUploader:
             time.sleep(sleep_seconds)
 
     def get_authenticated_service(self, args):
+        """_summary_
+
+        Args:
+            args (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         flow = flow_from_clientsecrets(
             self.CLIENT_SECRETS_FILE,
             scope=self.YOUTUBE_UPLOAD_SCOPE,
@@ -182,6 +206,15 @@ class YouTubeVideoUploader:
         )
 
     def initialize_upload(self, youtube, options):
+        """_summary_
+
+        Args:
+            youtube (_type_): _description_
+            options (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         tags = None
         if options.keywords:
             tags = options.keywords.split(",")
@@ -222,4 +255,9 @@ class YouTubeVideoUploader:
         return dt_start, dt_end
 
     def get_youtube_video_url(self):
+        """_summary_
+
+        Returns:
+            _type_: _description_
+        """
         return f"https://www.youtube.com/watch?v={self.id}"
