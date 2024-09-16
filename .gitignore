@@ -2,30 +2,11 @@ audio_file/
 output/
 creds/
 audio_message_list.xlsx
-__pycache__/VideoGenerator.cpython-39.pyc
-__pycache__/YouTubeVideoUploader.cpython-39.pyc
-family_camp_2023/01 Session 1_ Returning to the Land. Visions 1-3 (Zech 1-2).mp3
-family_camp_2023/02 Session 2_ Restoring the People. Visions 4-5 (Zech 3-4).mp3
-family_camp_2023/03 Session 3_ Retribution On Their Enemies. Visions 6-8 (Zech 5-6).mp3
-family_camp_2023/04 Session 4_ _The word of the Lord came_ 4 Times (Zech 7-8).mp3
-family_camp_2023/05 Session 5_ Rescue and Redemption (Zech 9-10).mp3
-family_camp_2023/06 Session 6_ Rejection and Repentance (Zech 11-12).mp3
-family_camp_2023/07 Session 7_ Refining and Reformation (Zech 13-14).mp3
-family_camp_2023/08 Bible Reading_ Rapture (1 Th 4_13-18).mp3
-family_camp_2023_output/01 Session 1_ Returning to the Land. Visions 1-3 (Zech 1-2).mp3.mp4
-family_camp_2023_output/02 Session 2_ Restoring the People. Visions 4-5 (Zech 3-4).mp3.mp4
-family_camp_2023_output/03 Session 3_ Retribution On Their Enemies. Visions 6-8 (Zech 5-6).mp3.mp4
-family_camp_2023_output/04 Session 4_ _The word of the Lord came_ 4 Times (Zech 7-8).mp3.mp4
-family_camp_2023_output/05 Session 5_ Rescue and Redemption (Zech 9-10).mp3.mp4
-family_camp_2023_output/06 Session 6_ Rejection and Repentance (Zech 11-12).mp3.mp4
-family_camp_2023_output/07 Session 7_ Refining and Reformation (Zech 13-14).mp3.mp4
-family_camp_2023_output/08 Bible Reading_ Rapture (1 Th 4_13-18).mp3.mp4
-family_camp_2023_output/background/01 Session 1_ Returning to the Land. Visions 1-3 (Zech 1-2).mp3.jpg
-family_camp_2023_output/background/02 Session 2_ Restoring the People. Visions 4-5 (Zech 3-4).mp3.jpg
-family_camp_2023_output/background/03 Session 3_ Retribution On Their Enemies. Visions 6-8 (Zech 5-6).mp3.jpg
-family_camp_2023_output/background/04 Session 4_ _The word of the Lord came_ 4 Times (Zech 7-8).mp3.jpg
-family_camp_2023_output/background/05 Session 5_ Rescue and Redemption (Zech 9-10).mp3.jpg
-family_camp_2023_output/background/06 Session 6_ Rejection and Repentance (Zech 11-12).mp3.jpg
-family_camp_2023_output/background/07 Session 7_ Refining and Reformation (Zech 13-14).mp3.jpg
-family_camp_2023_output/background/08 Bible Reading_ Rapture (1 Th 4_13-18).mp3.jpg
-KGC Logo - no background.png
+**/*.pyc
+**/*.jpg
+**/*.png
+**/*.mp3
+**/*.mp4
+**/*.srt
+**/.DS_Store
+**/venv

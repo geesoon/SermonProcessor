@@ -5,9 +5,9 @@ import random
 import sys
 import time
 
-from apiclient.discovery import build
-from apiclient.errors import HttpError
-from apiclient.http import MediaFileUpload
+from googleapiclient.discovery import build
+from googleapiclient.errors import HttpError
+from googleapiclient.http import MediaFileUpload
 from oauth2client.client import flow_from_clientsecrets
 from oauth2client.file import Storage
 from oauth2client.tools import argparser, run_flow
@@ -27,14 +27,17 @@ class YouTubeVideoUploader:
     MAX_RETRIES = 10
 
     # Always retry when these exceptions are raised.
-    RETRIABLE_EXCEPTIONS = (httplib2.HttpLib2Error, IOError,
-                            http.client.NotConnected,
-                            http.client.IncompleteRead,
-                            http.client.ImproperConnectionState,
-                            http.client.CannotSendRequest,
-                            http.client.CannotSendHeader,
-                            http.client.ResponseNotReady,
-                            http.client.BadStatusLine)
+    RETRIABLE_EXCEPTIONS = (
+        httplib2.HttpLib2Error,
+        IOError,
+        http.client.NotConnected,
+        http.client.IncompleteRead,
+        http.client.ImproperConnectionState,
+        http.client.CannotSendRequest,
+        http.client.CannotSendHeader,
+        http.client.ResponseNotReady,
+        http.client.BadStatusLine,
+    )
 
     # Always retry when an apiclient.errors.HttpError with one of these status
     # codes is raised.
@@ -74,31 +77,30 @@ class YouTubeVideoUploader:
     For more information about the client_secrets.json file format, please visit:
     https://developers.google.com/api-client-library/python/guide/aaa_client_secrets
     """ % os.path.abspath(
-        os.path.join(os.path.abspath(''), CLIENT_SECRETS_FILE))
+        os.path.join(os.path.abspath(""), CLIENT_SECRETS_FILE)
+    )
 
     VALID_PRIVACY_STATUSES = ("public", "private", "unlisted")
 
     def upload_video(self, option):
         argparser.add_argument("--file", help="Video file to upload")
-        argparser.add_argument("--title",
-                               help="Video title",
-                               default="")
-        argparser.add_argument("--description",
-                               help="Video description",
-                               default="")
+        argparser.add_argument("--title", help="Video title", default="")
+        argparser.add_argument("--description", help="Video description", default="")
         argparser.add_argument(
             "--category",
             default="22",
-            help="Numeric video category. " +
-            "See https://developers.google.com/youtube/v3/docs/videoCategories/list"
+            help="Numeric video category. "
+            + "See https://developers.google.com/youtube/v3/docs/videoCategories/list",
         )
-        argparser.add_argument("--keywords",
-                               help="Video keywords, comma separated",
-                               default="")
-        argparser.add_argument("--privacyStatus",
-                               choices=self.VALID_PRIVACY_STATUSES,
-                               default=self.VALID_PRIVACY_STATUSES[0],
-                               help="Video privacy status.")
+        argparser.add_argument(
+            "--keywords", help="Video keywords, comma separated", default=""
+        )
+        argparser.add_argument(
+            "--privacyStatus",
+            choices=self.VALID_PRIVACY_STATUSES,
+            default=self.VALID_PRIVACY_STATUSES[0],
+            help="Video privacy status.",
+        )
         args = argparser.parse_args()
 
         args.file = option.file
@@ -115,8 +117,7 @@ class YouTubeVideoUploader:
             dt_start, dt_end = self.initialize_upload(youtube, args)
             return self.get_youtube_video_url(), dt_start, dt_end
         except HttpError as e:
-            print("An HTTP error %d occurred:\n%s" %
-                  (e.resp.status, e.content))
+            print("An HTTP error %d occurred:\n%s" % (e.resp.status, e.content))
 
     # This method implements an exponential backoff strategy to resume a
     # failed upload.
@@ -129,18 +130,22 @@ class YouTubeVideoUploader:
                 print("Uploading file...")
                 status, response = insert_request.next_chunk()
                 if response is not None:
-                    if 'id' in response:
-                        print("Video id '%s' was successfully uploaded." %
-                              response['id'])
+                    if "id" in response:
+                        print(
+                            "Video id '%s' was successfully uploaded." % response["id"]
+                        )
                         self.uploaded_video_id = response["id"]
                     else:
                         exit(
                             "The upload failed with an unexpected response: %s"
-                            % response)
+                            % response
+                        )
             except HttpError as e:
                 if e.resp.status in self.RETRIABLE_STATUS_CODES:
                     error = "A retriable HTTP error %d occurred:\n%s" % (
-                        e.resp.status, e.content)
+                        e.resp.status,
+                        e.content,
+                    )
                 else:
                     raise
             except self.RETRIABLE_EXCEPTIONS as e:
@@ -161,7 +166,8 @@ class YouTubeVideoUploader:
         flow = flow_from_clientsecrets(
             self.CLIENT_SECRETS_FILE,
             scope=self.YOUTUBE_UPLOAD_SCOPE,
-            message=self.MISSING_CLIENT_SECRETS_MESSAGE)
+            message=self.MISSING_CLIENT_SECRETS_MESSAGE,
+        )
 
         storage = Storage("./creds/YouTube/%s-oauth2.json" % sys.argv[0])
         credentials = storage.get()
@@ -169,20 +175,26 @@ class YouTubeVideoUploader:
         if credentials is None or credentials.invalid:
             credentials = run_flow(flow, storage, args)
 
-        return build(self.YOUTUBE_API_SERVICE_NAME,
-                     self.YOUTUBE_API_VERSION,
-                     http=credentials.authorize(httplib2.Http()))
+        return build(
+            self.YOUTUBE_API_SERVICE_NAME,
+            self.YOUTUBE_API_VERSION,
+            http=credentials.authorize(httplib2.Http()),
+        )
 
     def initialize_upload(self, youtube, options):
         tags = None
         if options.keywords:
             tags = options.keywords.split(",")
 
-        body = dict(snippet=dict(title=options.title,
-                                 description=options.description,
-                                 tags=tags,
-                                 categoryId=options.category),
-                    status=dict(privacyStatus=options.privacyStatus))
+        body = dict(
+            snippet=dict(
+                title=options.title,
+                description=options.description,
+                tags=tags,
+                categoryId=options.category,
+            ),
+            status=dict(privacyStatus=options.privacyStatus),
+        )
 
         # Call the API's videos.insert method to create and upload the video.
         insert_request = youtube.videos().insert(
@@ -199,16 +211,15 @@ class YouTubeVideoUploader:
             # practice, but if you're using Python older than 2.6 or if you're
             # running on App Engine, you should set the chunksize to something like
             # 1024 * 1024 (1 megabyte).
-            media_body=MediaFileUpload(options.file,
-                                       chunksize=-1,
-                                       resumable=True))
+            media_body=MediaFileUpload(options.file, chunksize=-1, resumable=True),
+        )
 
         dt_start = datetime.now()
-        print('Start uploading video to YouTube: ', options.title)
+        print("Start uploading video to YouTube: ", options.title)
         # self.resumable_upload(insert_request)
-        print('Finish uploading video to YouTube: ', options.title)
+        print("Finish uploading video to YouTube: ", options.title)
         dt_end = datetime.now()
         return dt_start, dt_end
 
     def get_youtube_video_url(self):
-        return f'https://www.youtube.com/watch?v={self.id}'
+        return f"https://www.youtube.com/watch?v={self.id}"
