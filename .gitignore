@@ -10,3 +10,4 @@ audio_message_list.xlsx
 **/*.srt
 **/.DS_Store
 **/venv
+**/.vscode
