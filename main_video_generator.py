@@ -1,8 +1,8 @@
 from video_generator_v2 import VideoGeneratorV2
 
 # CONSTANT
-INPUT_DIR = "./family_camp_2023/"
-OUTPUT_DIR = "./family_camp_2023_output/"
+INPUT_DIR = "./data/family_camp_2023/"
+OUTPUT_DIR = "./data/family_camp_2023_output/"
 
 # Find all the audio files in RAW_DIR
 # Get metadata from each audio file

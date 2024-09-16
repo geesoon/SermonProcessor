@@ -57,7 +57,7 @@ class VideoGeneratorV2:
     def generate_video_static_background_image(self, audio_metadata, file_name):
         """Create an image with a white background"""
         image = Image.new("RGB", (1920, 1080), (0, 0, 0))
-        logo = Image.open("./KGC Logo - no background.png")
+        logo = Image.open("./static/images/KGC Logo - no background.png")
         max_size = (200, 200)
         logo.thumbnail(max_size)
         logo_pos = (230, 250)
@@ -68,10 +68,10 @@ class VideoGeneratorV2:
 
         # Select a font and specify its size
         font = ImageFont.truetype(
-            "./Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 48
+            "./static/fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 48
         )
         title_font = ImageFont.truetype(
-            "./Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 70
+            "./static/fonts/Open_Sans/static/OpenSans/OpenSans-Regular.ttf", 70
         )
 
         font_color = (255, 255, 255)

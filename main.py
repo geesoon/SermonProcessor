@@ -1,7 +1,7 @@
 from urllib.error import HTTPError
 from clients.google_drive_client import GoogleDriveClient
 from video_generator import VideoGenerator
-from clients.youtube_client import YouTubeVideoUploader
+from clients.youtube_client import YouTubeClient
 
 from IPython.display import display
 import pandas as pd
@@ -161,7 +161,7 @@ def main():
                 "Generate video files and specification -> Upload generated video to YouTube",
             )
             video_generator = VideoGenerator(RAW_DIR, OUTPUT_DIR)
-            youtube_uploader = YouTubeVideoUploader()
+            youtube_uploader = YouTubeClient()
             for index, row in not_video_generated_recording_df.iterrows():
                 # Generate video and spec
                 try:
